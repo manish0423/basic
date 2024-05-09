@@ -1,0 +1,28 @@
+Cheat 1 and 2
+
+import pandas as pd
+df = pd.read_csv('dataset_Facebook.csv',sep=';')
+df.describe()
+df.shape
+df1 = df[df['Type']=='Photo']
+df2 = df[['Type','Category']]
+df3 = df[['Page total likes','Type','Category']].loc[16:50]
+concat_df = pd.concat([df1,df2,df3])
+
+sort = ddfmerged.sort_values('age',ascending=False)
+
+sort = ddfmerged.sort_values('age',ascending=True)
+
+t1 = ddfmerged.transpose()
+
+t2 = ddfmerged.T
+
+student = {
+    'id':[1,2,3,1,2,3],
+    'subject':['Maths','English','Science','Maths','English','Science'],
+    'marks':[24,23,21,25,26,27]
+}
+studf = pd.DataFrame(student)
+studf
+
+pd.pivot_table(df,index=['Type','Paid'],values='like')

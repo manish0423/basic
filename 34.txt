@@ -1,0 +1,87 @@
+Cheat 3 and 4 
+
+import pandas as pd
+import numpy as np
+from sklearn.model_selection import train_test_split 
+from sklearn.naive_bayes import GaussianNB,MultinomialNB
+from sklearn.metrics import accuracy_score 
+
+DataFrame1 = pd.read_csv('heart.csv')
+DataFrame2 = pd.read_csv('AirQuality.csv',sep=';')
+
+DataFrame1.head()
+DataFRame2.head()
+
+DataFrame1.shape
+
+DataFrame1.info()
+
+DataFrame2.isnull().sum().sum()
+
+
+
+-------- Data Cleaning Started --------
+
+
+DataFrame1.isna().sum().sum()
+DataFrame2.isna().sum().sum()
+
+df2 = DataFrame2.iloc[:,:15]
+df2
+
+df2.isna().sum().sum()
+
+df3=df2.dropna()
+df3.isna().sum()
+
+df3['Date'] = pd.to_datetime(df3['Date'], format='%d/%m/%Y')
+
+df3.replace(to_replace=',',value='.',regex=True,inplace=True)
+df3
+
+
+
+-------- Data Integration Started --------
+
+subset1 = df3[['PT08.S1(CO)','NMHC(GT)','C6H6(GT)']].loc[10:20]
+subset1
+
+subset2 = df3[['PT08.S2(NMHC)','NOx(GT)','PT08.S3(NOx)']].loc[21:30]
+subset2
+
+megaset = pd.concat([subset1,subset2])
+megaset
+
+
+
+-------- Data Transformation Started --------
+
+df3['Date'] = pd.to_datetime(df3['Date'], format='%d/%m/%Y')
+DataFrame1.loc[DataFrame1['sex']==1,'sex']='M'
+DataFrame1.loc[DataFrame1['sex']==0,'sex']='F'
+
+
+
+air_quality_df['Date'] = pd.to_datetime(air_quality_df['Date'], format='%d/%m/%Y')
+air_quality_df.replace(to_replace=',', value='.', regex=True, inplace=True)
+air_quality_df.drop_duplicates(inplace=True)
+
+
+
+-------- Error Correcting Started --------
+air_quality_df.dropna(inplace=True)
+
+
+
+-------- Data Model Building Started --------
+
+X_train, X_test, y_train, y_test = train_test_split(DataFrame1.iloc[:,:-1], DataFrame1.iloc[:,-1], test_size = 0.3, random_state = 0)
+
+gnb = GaussianNB()
+gnb.fit(X_train, y_train)
+
+y_pred = gnb.predict(X_test)
+y_pred
+
+print('Model accuracy score: {0:0.4f}'. format(accuracy_score(y_test, y_pred)))
+
